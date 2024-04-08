@@ -1,0 +1,6 @@
+.cache
+.vscode
+.git
+
+docker/*.env
+node_modules
