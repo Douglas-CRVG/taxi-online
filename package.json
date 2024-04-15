@@ -2,20 +2,24 @@
   "name": "taxi-online",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "api.ts",
   "scripts": {
-    "start": "NODE_PATH=./build node build/index.js",
+    "start": "NODE_PATH=./build node build/api.js",
     "build": "tsc -p .",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/api.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.19.2"
+    "axios": "^1.5.0",
+    "express": "^4.19.2",
+    "jest": "^29.6.4",
+    "pg-promise": "^11.5.4"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
+    "@types/jest": "^29.5.4",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",
@@ -23,6 +27,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^3.1.0",
     "prettier": "^2.3.2",
+    "ts-jest": "^29.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.4"
   }
