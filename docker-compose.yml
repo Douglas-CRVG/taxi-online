@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  taxi-online:
+  app:
     build:
       context: .
       target: development
@@ -14,3 +14,27 @@ services:
       - ./src:/app/src
       - ./nodemon.json:/app/nodemon.json
       - ./node_modules:/app/node_modules
+    depends_on:
+      postgres:
+        condition: service_started
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - ${DB_APP_PORT}:${DB_APP_PORT}
+    environment:
+      POSTGRES_USER: ${DB_APP_USERNAME}
+      POSTGRES_PASSWORD: ${DB_APP_PASSWORD}
+      POSTGRES_DB: ${DB_APP_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ${PWD}/docker/db/initdb/:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:
+  node_modules:
+
+
+networks:
+  default:
+    driver: bridge
