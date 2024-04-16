@@ -4,3 +4,5 @@
 
 #enviroments
 .env
+
+coverage
