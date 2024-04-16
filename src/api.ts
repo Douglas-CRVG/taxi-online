@@ -3,21 +3,20 @@ import express from 'express';
 import pgp from 'pg-promise';
 import { validate } from './validateCpf';
 
-const PORT = process.env.APP_PORT || 3000;
+const URI_DB = `postgres://${process.env.DB_APP_USERNAME}:${process.env.DB_APP_PASSWORD}@${process.env.DB_APP_HOST}:${process.env.DB_APP_PORT}/${process.env.DB_APP_NAME}`;
 
 const app = express();
 app.use(express.json());
 
 app.post('/signup', async function (req, res) {
   let result;
-  // const connection = pgp()('postgres://postgres:123456@localhost:5432/app');
-  const connection = pgp()('jdbc:postgresql://localhost:5432/taxi-online');
 
+  const connection = pgp()(URI_DB);
   try {
     const id = crypto.randomUUID();
 
     const [acc] = await connection.query(
-      'select * from cccat15.account where email = $1',
+      'select * from cccat16.account where email = $1',
       [req.body.email],
     );
     if (!acc) {
@@ -27,7 +26,7 @@ app.post('/signup', async function (req, res) {
             if (req.body.isDriver) {
               if (req.body.carPlate.match(/[A-Z]{3}[0-9]{4}/)) {
                 await connection.query(
-                  'insert into cccat15.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)',
+                  'insert into cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)',
                   [
                     id,
                     req.body.name,
@@ -49,7 +48,7 @@ app.post('/signup', async function (req, res) {
               }
             } else {
               await connection.query(
-                'insert into cccat15.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)',
+                'insert into cccat16.account (account_id, name, email, cpf, car_plate, is_passenger, is_driver) values ($1, $2, $3, $4, $5, $6, $7)',
                 [
                   id,
                   req.body.name,
@@ -91,6 +90,8 @@ app.post('/signup', async function (req, res) {
     await connection.$pool.end();
   }
 });
+
+const PORT = process.env.APP_PORT || 3000;
 
 app.listen(PORT, () =>
   console.log(`
