@@ -4,9 +4,10 @@
   "description": "",
   "main": "api.ts",
   "scripts": {
-    "start": "NODE_PATH=./build node build/api.js",
     "build": "tsc -p .",
-    "dev": "nodemon src/api.ts"
+    "start:prd": "NODE_PATH=./build node build/api.js",
+    "start:dev": "nodemon src/api.ts",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",

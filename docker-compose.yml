@@ -7,9 +7,14 @@ services:
       target: development
     environment:
       APP_PORT: ${APP_PORT}
+      DB_APP_HOST: ${DB_APP_HOST}
+      DB_APP_PORT: ${DB_APP_PORT}
+      DB_APP_NAME: ${DB_APP_NAME}
+      DB_APP_USERNAME: ${DB_APP_USERNAME}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD}
     ports:
       - ${APP_PORT}:${APP_PORT}
-    command: npm run dev
+    command: npm run start:dev
     volumes:
       - ./src:/app/src
       - ./nodemon.json:/app/nodemon.json
@@ -26,6 +31,7 @@ services:
       POSTGRES_USER: ${DB_APP_USERNAME}
       POSTGRES_PASSWORD: ${DB_APP_PASSWORD}
       POSTGRES_DB: ${DB_APP_NAME}
+      POSTGRES_PORT: ${DB_APP_PORT}
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ${PWD}/docker/db/initdb/:/docker-entrypoint-initdb.d
